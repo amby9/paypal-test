@@ -30,6 +30,7 @@ public class EmployeeResourceImpl implements EmployeeResource {
 
     @Override
     public ResponseEntity<Employee> employeeGetById(String id) {
+        if(!employeeResourceRepository.findById(Integer.parseInt(id)).isPresent()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         try {
             EmployeeDaoEntity employeeDaoEntity = employeeResourceRepository.findById(Integer.parseInt(id)).get();
             Employee employee = new Employee();
