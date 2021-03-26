@@ -65,8 +65,7 @@ public class EmployeeResourceImpl implements EmployeeResource {
 
         if (!RequestValidation.validateFirstName(employee.getFirstName())
                 || !RequestValidation.validateLasName(employee.getLastName())
-                || !RequestValidation.validateJavaDate(employee.getDateOfBirth()) || !RequestValidation.validateAddress(employee.getAddress()) ||
-                employeeGetById(String.valueOf(employee.getId())).getStatusCodeValue() == HttpStatus.OK.value()) {
+                || !RequestValidation.validateJavaDate(employee.getDateOfBirth()) || !RequestValidation.validateAddress(employee.getAddress())) {
             log.error("bad requests received while calling employeeCreate()");
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
@@ -76,7 +75,6 @@ public class EmployeeResourceImpl implements EmployeeResource {
             EmployeeDaoEntity employeeDaoEntity = EmployeeDaoEntity.builder().build();
             employeeDaoEntity.setFirstName(employee.getFirstName());
             employeeDaoEntity.setLastName(employee.getLastName());
-            employeeDaoEntity.setId(employee.getId());
             employeeDaoEntity.setDateOfBirth(employee.getDateOfBirth());
             AddressDaoEntity addressDaoEntity = AddressDaoEntity
                     .builder()
@@ -86,7 +84,6 @@ public class EmployeeResourceImpl implements EmployeeResource {
                     .country(employee.getAddress().getCountry())
                     .state(employee.getAddress().getState())
                     .zipCode(employee.getAddress().getZipCode())
-                    .id(employee.getId())
                     .build();
             employeeDaoEntity.setAddressDaoEntity(addressDaoEntity);
             employeeResourceRepository.save(employeeDaoEntity);

@@ -12,6 +12,7 @@ import java.util.Date;
 @Builder
 public class EmployeeDaoEntity {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     private String firstName;
     private String lastName;
